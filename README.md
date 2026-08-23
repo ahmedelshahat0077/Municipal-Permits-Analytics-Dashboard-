@@ -3,7 +3,9 @@
 ![Permit Analytics Demo](./assets/permit-demo.gif)
 > 💡 *Interactive Power BI Dashboard backed by an SQL Server database pipeline, highlighting SLA performance, bottlenecks, and channel distribution.*
 
----
+<img width="1132" height="636" alt="20-39-37" src="https://github.com/user-attachments/assets/76f062c1-8cc1-42c7-9b21-0a189be67441" />
+
+
 
 ## 📌 Executive Summary
 This project presents an end-to-end data pipeline designed to analyze permit application workflows and SLA compliance. The process covers database architecture setup, CSV data ingestion, quality validation in SQL Server, dynamic data modeling, and interactive visualization in Power BI. 

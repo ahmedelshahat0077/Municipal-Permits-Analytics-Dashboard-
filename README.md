@@ -1,73 +1,67 @@
-# 📑 End-to-End Permit & SLA Performance Analytics
 
-![Permit Analytics Demo](./assets/permit-demo.gif)
-> 💡 *Interactive Power BI Dashboard backed by an SQL Server database pipeline, highlighting SLA performance, bottlenecks, and channel distribution.*
+# 🏛️ Municipal Permit Analytics | End-to-End BI Project
+
+An end-to-end Data Analytics project designed to optimize municipal operations, evaluate digital transformation efficiency, and monitor Service Level Agreement (SLA) compliance. This project covers relational database schema implementation in **Microsoft SQL Server**, complex ETL/DAX calculations, and an interactive executive dashboard in **Power BI**.
+
 
 <img width="1132" height="636" alt="20-39-37" src="https://github.com/user-attachments/assets/76f062c1-8cc1-42c7-9b21-0a189be67441" />
 
 
 
-## 📌 Executive Summary
-This project presents an end-to-end data pipeline designed to analyze permit application workflows and SLA compliance. The process covers database architecture setup, CSV data ingestion, quality validation in SQL Server, dynamic data modeling, and interactive visualization in Power BI. 
+## 🛠️ Tech Stack & Workflow
 
-The goal is to translate raw transactional data into actionable operational strategies—identifying delay root causes and optimizing resource distribution.
-
----
-
-## 🛠️ End-to-End Technical Architecture
-
-### 1. Database Creation & Data Ingestion (SQL Server)
-* **Server Setup:** Configured a dedicated database instance on SQL Server to process high-volume operational records.
-* **ETL & Data Loading:** Bulk-loaded raw CSV files into staging tables, enforcing strict data types for dates, IDs, and numeric metrics.
-* **Data Quality Checks & Validation:** Executed SQL validation scripts to audit:
-  * Null/Missing values in critical fields (`Application_number`, `Target_SLA_Days`).
-  * Date integrity checks (ensuring `Processing_Days` >= 0 and submission dates precede completion dates).
-  * Duplicate identification across permit applications.
-
-### 2. Power BI Import & Data Modeling
-* **SQL Integration:** Imported clean relational Tables directly from SQL Server into Power BI.
-* **Data Modeling:** Built a clean **Star Schema** connecting core Facts (Permit Transactions) with Dimensions (date, Services, Region).
-* **DAX Formulas:** Developed custom measures for business metrics like:
-  * `SLA Compliance Rate %`
-  * `Overdue Rate %`
+* **Database & Data Modeling:** Microsoft SQL Server (Relational Schema, Star Schema, Aggregations)
+* **Business Intelligence & Visualization:** Power BI Desktop
+* **Data Transformation:** Power Query (M Code)
+* **Analytics & Calculations:** Advanced DAX (Measures, CALCULATE, Dynamic Ranks)
 
 ---
 
-## 🔍 Key Findings & Root Cause Analysis
+## 🗄️ Database Architecture & SQL Engineering
 
-* **Finding 1: High Overdue Rate (20.5%):** Out of 2,500 applications, 512 applications breached target SLAs.
-* **Finding 2: Service Bottlenecks:** Technical categories like *Infrastructure Compliance & Inspection* showed actual processing times significantly exceeding target SLA days.
-* **Finding 3: Seasonal Spikes:** Application submissions peak sharply in **Q3** (~640 applications), causing seasonal backlog accumulation.
-* **Finding 4: Channel Disparity:** While the **Online Portal** handles over 80% of application volume, physical **Service Centers** experience higher relative delay rates per application processed.
+Before visualizing the metrics, the raw operational data was structured and loaded into **SQL Server** to build a robust **Star Schema** optimized for high-performance BI reporting.
 
----
-
-## 💡 Recommended Business Solutions & Action Plan
-
-| Problem Identified | Root Cause | Proposed Solution / Action |
-| :--- | :--- | :--- |
-| **SLA Breaches in Infrastructure** | Complex technical review steps & manual inspection processes. | **Fast-Track Routing:** Implement automated preliminary approvals for low-risk infrastructure permits. |
-| **Q3 Application Backlog** | Fixed staffing levels during high-demand seasonal peaks. | **Dynamic Capacity Allocation:** Reallocate staff from low-volume quarters (Q1/Q2) to assist technical review teams during Q3. |
-| **Service Center Delays** | High manual data entry load and paper-based processing steps. | **Digital Migration Strategy:** Incentivize users toward the Online Portal and Mobile App via automated status updates. |
+### SQL Implementation Steps:
+1. **Schema Design & Data Ingestion:** Formatted raw transaction logs into structured Fact (`fact_permits`) and Dimension tables (`dim_service`, `dim_channel`, `dim_region`).
+2. **Data Integrity & Transformations:**
+   * Calculated operational durations: `Processing_Days = DATEDIFF(day, Application_Date, Completion_Date)`.
+   * Enforced SLA flags: Derived `Overdue_Status` by comparing actual processing time against SLA targets (`Target_SLA_Days`).
 
 ---
 
-## ⚙️ Dashboard Structure
+## 📊 Business Story & Analytics Findings
 
-* **Executive Overview:** High-level executive KPIs (Total Applications, SLA Compliance %, Overdue Rate, Geographic Map, Quarterly Trends).
-* **Operational Overview:** Granular breakdown by application channel, target vs. actual processing days per service, and status tracking (Completed, Under Review, Rejected).
+### 1. Overall Workload & SLA Performance
+* **Total Volume:** Processed **2,500 applications** with an **81.8% completion rate** and a low **7.2% rejection rate**.
+* **SLA Breaches:** **80% SLA compliance rate**, leaving **20% (512 cases)** overdue.
+* **Geographic Focus:** Demand is heavily concentrated in **Los Angeles**, followed by **San Diego** and **San Jose**.
+
+### 2. Digital vs. Traditional Channel Efficiency
+* **Digital Superiority (`Online Portal` & `Mobile App`):** Achieved near-zero rejection rates and rapid turnaround times. Embedded form validations prevent incomplete user submissions.
+* **Service Counter Bottlenecks (`Service Center` & `Kiosk`):** Account for almost all pending cases (`Under Review`) and registered **95 rejected applications** due to manual entry errors and missing physical paperwork.
+
+### 3. Critical SLA Bottlenecks
+* **Infrastructure Compliance Inspection:** Severe delay averaging **12 processing days** against a target of **7 days** (+5 days breach).
+* **Commercial Lease Registration:** Averages **5 processing days** against a target of **2 days** (+3 days breach).
+* **Public Road Occupancy Permit:** Averages **4.5 processing days** against a target of **3 days** (+1.5 days breach).
+* *Positive SLA Highlight:* `Zoning Variance Request` and `Residential Building Permit` process well within SLA targets.
+
+### 4. Departmental Demand Imbalance
+* **High-Volume Divisions:** `Real Estate & Land Use` and `Building & Safety` handle **over 1,800 applications** (>70% of total municipal volume).
+* **Low-Volume Division:** `Urban Planning` processes under **200 applications** (<8% of total volume) due to the complex, long-term nature of urban requests.
 
 ---
 
-## 📂 Project Structure
-```text
-├── sql/
-│   ├── 01_schema_setup.sql          # Database creation scripts
-│   ├── 02_data_ingestion.sql        # Bulk load & staging
-│   └── 03_data_quality_checks.sql   # Data validation scripts
-├── data/
-│   └── raw_permits.csv              # Source CSV datasets
-├── assets/
-│   └── permit-demo.gif              # Walkthrough video clip
-├── Permit_Analytics_Dashboard.pbix  # Main Power BI dashboard
-└── README.md                        # Project documentation
+## 💡 Strategic Recommendations
+
+* **Automate Inspection Workflows:** Streamline field inspection procedures for **Infrastructure Compliance Inspection** to bring turnaround time down from 12 to 7 days.
+* **Mandate Digital Channel Shift:** Force high-volume requests (such as `Commercial Leases`) to the **Online Portal** to leverage pre-validation rules and reduce counter foot traffic.
+* **Reallocate Staff:** Shift administrative personnel from low-volume divisions (`Urban Planning`) to high-demand departments (`Real Estate` & `Building & Safety`) to clear backlogs.
+* **Standardize Front-Desk Intakes:** Implement mandatory checklists at physical `Service Centers` to eliminate the 95 counter-level rejections.
+
+---
+
+## 🎨 Dashboard Design
+
+* **Executive vs. Operational Views:** Structured two-page navigational reporting (Executive Summary & Operational Overview).
+

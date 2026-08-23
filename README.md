@@ -1,5 +1,5 @@
 
-# 🏛️ Municipal Permit Analytics | End-to-End BI Project
+# 🏛️ Municipal Permits Analytics | End-to-End BI Project
 
 An end-to-end Data Analytics project designed to optimize municipal operations, evaluate digital transformation efficiency, and monitor Service Level Agreement (SLA) compliance. This project covers relational database schema implementation in **Microsoft SQL Server**, complex ETL/DAX calculations, and an interactive executive dashboard in **Power BI**.
 

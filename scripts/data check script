@@ -1,1 +1,88 @@
+/*====================================================
+  Data Quality Check - fact_permits
+====================================================*/
 
+select * from fact_permits
+
+-- Duplicate Check
+select
+permit_id,
+count(*)
+from fact_permits
+group by Permit_ID
+having count(*) > 1
+
+-- null values Check
+select
+permit_id
+from fact_permits
+where Permit_ID is null
+
+-- check for outliers
+SELECT *
+FROM fact_permits
+WHERE completion_date < Request_date
+
+SELECT *
+FROM fact_permits
+WHERE Request_date > GETDATE();
+
+/*====================================================
+  Data Quality Check - dim_regions
+====================================================*/
+
+select * from dim_regions
+
+-- Duplicate Check
+select
+Region_ID,
+count(*)
+from dim_regions
+group by region_ID
+having count(*) > 1
+
+-- null values Check
+select
+Region_ID
+from dim_regions
+where region_ID is null
+
+/*====================================================
+  Data Quality Check - dim_services
+====================================================*/
+
+select * from dim_services
+
+-- Duplicate Check
+select
+service_ID,
+count(*)
+from dim_services
+group by service_id
+having count(*) > 1
+
+-- null values Check
+select
+service_ID
+from dim_services
+where service_id is null
+
+/*====================================================
+  Data Quality Check - dim_date
+====================================================*/
+
+select * from dim_date
+
+-- Duplicate Check
+select
+date_key,
+count(*)
+from dim_date
+group by date_key
+having count(*) > 1
+
+-- null values Check
+select
+date_key
+from dim_date
+where date_key is null

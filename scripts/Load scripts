@@ -1,1 +1,81 @@
+/*
+===============================================================================
+load Script: loading municipality analysis dataset Tables
+===============================================================================
+Script Purpose:
+    This script loads data into tables from external CSV files. 
+    It performs the following actions:
+    - Truncates the tables before loading data.
+    - Uses the `BULK INSERT` command to load data from csv Files to tables.
+	===============================================================================
+*/
+--------------------------------------------------------------
+-- inserting data into table fact_permits
+--------------------------------------------------------------
+PRINT '>> trucating table: fact_permits';
+truncate table fact_permits
+PRINT '>> Inserting Data Into: fact_permits';
+BULK INSERT fact_permits
+FROM 'D:\SQL\municiplity project\fact_permits.csv'
+		with
+		(
+		firstrow = 2,
+		fieldterminator = ',',
+		ROWTERMINATOR = '0x0a',
+		tablock
+		);
+		go
+-------------------------------------------------------------------------
+--------------------------------------------------------------
+-- inserting data into table dim_regions
+--------------------------------------------------------------
+PRINT '>> trucating table: dim_regions';
+truncate table dim_regions
+PRINT '>> Inserting Data Into: dim_regions';
+BULK INSERT dim_regions
+FROM 'D:\SQL\municiplity project\dim_regions.csv'
+		with
+		(
+		firstrow = 2,
+		fieldterminator = ',',
+		ROWTERMINATOR = '0x0a',
+		tablock
+		);
+		go
+-------------------------------------------------------------------------
+--------------------------------------------------------------
+-- inserting data into table dim_services
+--------------------------------------------------------------
+PRINT '>> trucating table: dim_services';
+truncate table dim_services
+PRINT '>> Inserting Data Into: dim_services';
+BULK INSERT dim_services
+FROM 'D:\SQL\municiplity project\dim_services.csv'
+		with
+		(
+		firstrow = 2,
+		fieldterminator = ',',
+		ROWTERMINATOR = '0x0a',
+		tablock
+		);
+		go
+-------------------------------------------------------------------------
+--------------------------------------------------------------
+-- inserting data into table dim_date
+--------------------------------------------------------------
+PRINT '>> trucating table: dim_date';
+truncate table dim_date
+PRINT '>> Inserting Data Into: dim_date';
+BULK INSERT dim_date
+FROM 'D:\SQL\municiplity project\dim_date.csv'
+		with
+		(
+		firstrow = 2,
+		fieldterminator = ',',
+		ROWTERMINATOR = '0x0a',
+		tablock
+		);
+		go
+-------------------------------------------------------------------------
+--------------------------------------------------------------
 

@@ -1,1 +1,66 @@
+/*
+===============================================================================
+DDL Script: creating municipality analysis dataset Tables
+===============================================================================
+Script Purpose:
+    This script creates tables in the municipality analysis dataset, dropping existing tables 
+    if they already exist.
+	  Run this script to re-define the DDL structure of Tables
+===============================================================================
+*/
+-------------------------------------------------------------
+IF OBJECT_ID('fact_permits', 'U') IS NOT NULL
+    DROP TABLE fact_permits;
+GO
+create table fact_permits
+(
+Permit_ID int,
+Application_number nvarchar(500),
+Service_ID nvarchar(500),
+Region_ID nvarchar (500),
+Request_date date,
+completion_date date,
+Processing_Days int,
+Status nvarchar (500),
+Channel nvarchar (500)
+);
+go
 
+IF OBJECT_ID('dim_regions', 'U') IS NOT NULL
+    DROP TABLE dim_regions;
+GO
+create table dim_regions
+(
+region_ID nvarchar(500),
+Region_Name nvarchar(500),
+State nvarchar(500)
+);
+go
+
+IF OBJECT_ID('dim_services', 'U') IS NOT NULL
+    DROP TABLE dim_services;
+GO
+create table dim_services
+(
+service_id nvarchar(500),
+service_name nvarchar(500),
+category nvarchar(500),
+Target_SLA_Days int
+);
+go
+
+IF OBJECT_ID('dim_date', 'U') IS NOT NULL
+    DROP TABLE dim_date;
+GO
+create table dim_date
+(
+Date_Key int,
+Full_Date date,
+Year  int,
+Quarter int,
+Month int,
+Month_Name nvarchar (500),
+Day_Of_Week nvarchar (500),
+Is_Weekend int
+);
+go

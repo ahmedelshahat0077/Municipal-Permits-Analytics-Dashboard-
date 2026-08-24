@@ -1,0 +1,6 @@
+service_id,service_name,category,Target_SLA_Days
+S1,Residential Building Permit,Building & Safety,5
+S2,Commercial Lease Registration,Real Estate & Land Use,2
+S3,Public Road Occupancy Permit,Public Works & Transport,3
+S4,Zoning Variance Request,Urban Planning,10
+S5,Infrastructure Compliance Inspection,Public Works & Transport,7
